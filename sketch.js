@@ -28,7 +28,7 @@ function setup() {
 
 function draw() {
   background(0, 5);
-  t += 0.05;
+  t += 0.01;
 
   for (let i = blowers.length - 1; i >= 0; i--) {
     blowers[i].update(t);
@@ -50,11 +50,11 @@ class Blower {
     //circle(this.posx, this.posy, noise(this.posx + t, this.posy + t) * 15);
     push();
     translate(this.posx, this.posy);
-    this.direction = noise(this.posx + t, this.posy + t) * 360;
+    this.direction = noise(this.posx / abstandBlowers, this.posy / abstandBlowers, frameCount / 200) * 360;
     rotate(this.direction);
 
-    stroke(0);
-    //line(0, 0, 20, 0);
+    stroke(255);
+    line(0, 0, 20, 0);
     pop();
   }
 }
@@ -65,7 +65,7 @@ class Particle {
     this.posX = posx;
     this.posY = posy;
     this.nextBlower = 0;
-    this.speed = 1;
+    this.speed = 2;
     this.speedX = 0;
     this.speedY = 0;
     this.rotation = 0;
@@ -80,7 +80,7 @@ class Particle {
       if (distance < shortestDist) {
         shortestDist = distance;
         this.nextBlower = blowers[i];
-        this.rotation = lerp(this.rotation, this.nextBlower.direction + 90, 0.6);
+        this.rotation = lerp(this.rotation, this.nextBlower.direction + 90, 0.4);
       }
     }
 
@@ -103,7 +103,7 @@ class Particle {
     }
 
     noStroke();
-    this.color = lerp(this.color, noise(this.posX + t, this.posY + t) * 100, 0.001);
+    this.color = lerp(this.color, noise(this.posX / abstandBlowers, this.posY / abstandBlowers, frameCount / 500) * 100, 0.01);
     fill(this.color, 100, 100);
     circle(this.posX, this.posY, 10)
   }
