@@ -54,7 +54,7 @@ class Blower {
     rotate(this.direction);
 
     stroke(255);
-    line(0, 0, 20, 0);
+    //line(0, 0, 20, 0);
     pop();
   }
 }
